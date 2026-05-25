@@ -5,4 +5,4 @@ set JARFILE=target\Study29-jar-with-dependencies.jar
 set MAINCLASS=kp.gui.GuiClientLauncher
 cd ..
 %JAVA_HOME%\bin\java -cp %JARFILE% %MAINCLASS%
-pause
+::pause

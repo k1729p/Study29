@@ -5,3 +5,4 @@ set JARFILE=target\Study29-jar-with-dependencies.jar
 set MAINCLASS=kp.web.httpserver.WebServerLauncher
 cd ..
 %JAVA_HOME%\bin\java -cp %JARFILE% %MAINCLASS%
+::pause

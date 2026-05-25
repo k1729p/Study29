@@ -7,7 +7,6 @@ import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
 import co.elastic.clients.elasticsearch.indices.IndexState;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import kp.domain.company.Department;
 import kp.domain.company.Employee;
@@ -38,9 +37,9 @@ public class ElasticsearchDatabaseClient {
      * @param key the key
      */
     public static void process(String key) {
-        try (RestClient restClient = createRestClient()) {
-            final ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
-            final ElasticsearchClient client = new ElasticsearchClient(transport);
+
+        try (ElasticsearchClient client = new ElasticsearchClient(
+                new RestClientTransport(createRestClient(), new JacksonJsonpMapper()))) {
 
             switch (key) {
                 case "ELA_01" -> discoverSchema(client);
@@ -48,7 +47,7 @@ public class ElasticsearchDatabaseClient {
                 default -> logger.warn("process(): unhandled key[{}]", key);
             }
         } catch (Exception e) {
-            logger.error("process(): Exception[{}]", e.getMessage());
+            logger.error("process(): Exception[{}]", e.getMessage(), e);
             throw new RuntimeException(e);
         }
         logger.info("process(): key[{}]", key);
@@ -73,7 +72,7 @@ public class ElasticsearchDatabaseClient {
                         .map(TypeMapping::properties).ifPresent(consumer);
             });
         } catch (IOException e) {
-            logger.error("discoverSchema(): IOException[{}]", e.getMessage());
+            logger.error("discoverSchema(): IOException[{}]", e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }
@@ -87,6 +86,8 @@ public class ElasticsearchDatabaseClient {
         logger.info("### Departments and Employees ###");
         SearchResponse<Object> departmentResponse;
         SearchResponse<Object> employeeResponse;
+        // This fails on client because project uses jackson-databind version 3:
+        // client.search(b -> b.index(INDEX_DEPARTMENTS).size(1000), Department.class)
         try {
             departmentResponse = client.search(bld -> bld
                     .index(INDEX_DEPARTMENTS)
@@ -95,7 +96,7 @@ public class ElasticsearchDatabaseClient {
                     .index(INDEX_EMPLOYEES)
                     .size(1000), Object.class);
         } catch (IOException e) {
-            logger.error("getDepartmentsAndEmployees(): IOException[{}]", e.getMessage());
+            logger.error("getDepartmentsAndEmployees(): IOException[{}]", e.getMessage(), e);
             throw new RuntimeException(e);
         }
         final List<Department> departmentList = loadsDepartmentsAndEmployees(departmentResponse, employeeResponse);
@@ -113,7 +114,7 @@ public class ElasticsearchDatabaseClient {
             SearchResponse<Object> departmentResponse, SearchResponse<Object> employeeResponse) {
 
         final Function<Object, Integer> intFun = (object) -> Optional.ofNullable(object)
-                .filter(Integer.class::isInstance).map(Integer.class::cast).orElse(0);
+                .filter(Number.class::isInstance).map(Number.class::cast).map(Number::intValue).orElse(0);
         final Function<Object, String> strFun = (object) -> Optional.ofNullable(object)
                 .filter(String.class::isInstance).map(String.class::cast).orElse("");
         final Map<Integer, String> departmentNames = new LinkedHashMap<>();
