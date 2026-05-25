@@ -1,0 +1,126 @@
+---------------------------------------------------------------------------------
+Online Neo4j Console
+https://console.neo4j.io/
+Sign up / Continue With Google (before it was logged in Chroma to k1729p@gmail.com
+Instance01 <--- Resume instance
+---------------------------------------------------------------------------------
+# Wait 60 seconds before connecting using these details, or login to https://console.neo4j.io to validate the Aura Instance is available
+NEO4J_URI=neo4j+s://125f67dc.databases.neo4j.io
+NEO4J_USERNAME=125f67dc
+NEO4J_PASSWORD=MTnDOHJKx6SlO6RxonLc32RCvGUFSZI1_-cd598RVvs
+NEO4J_DATABASE=125f67dc
+AURA_INSTANCEID=125f67dc
+AURA_INSTANCENAME=Instance01
+---------------------------------------------------------------------------------
+*** queries for Graph in Neo4j browser ***
+--- all nodes and all relationships ---
+MATCH (order:Order),
+  path1 = (order)-[:ORDERS]->(:Product)-[:PART_OF]->(:Category),
+  path2 = (order)<-[:PURCHASED]-(:Customer),
+  path3 = (order)<-[:SHIPS]-(:Shipper),
+  path4 = (order)-[:ORDERS]->(:Product)<-[:SUPPLIES]-(:Supplier),
+  path5 = (order)<-[:SOLD]-(employee:Employee)-[:IN_TERRITORY]->(:Territory)-[:IN_REGION]->(:Region),
+  path6 = (employee)-[:REPORTS_TO*1..2]->(:Employee)
+LIMIT 1
+RETURN path1, path2, path3, path4, path5, path6
+----------------------------------------------------------------------------------------------------------------
+*** Northwind Export Queries ***
+--- nodes ---
+01. Category
+MATCH (n:Category) 
+RETURN n.categoryID AS categoryID, 
+       n.categoryName AS categoryName, 
+       n.description AS description
+
+02. Customer
+MATCH (n:Customer)
+RETURN n.customerID AS customerID, n.companyName AS companyName, n.contactName AS contactName,
+       n.contactTitle AS contactTitle, n.phone AS phone, n.fax AS fax, n.country AS country,
+       n.region AS region, n.city AS city, n.postalCode AS postalCode, n.address AS address
+  
+03. Employee
+MATCH (n:Employee)
+RETURN n.employeeID AS employeeID, n.firstName AS firstName, n.lastName AS lastName,
+	   n.title AS title, n.titleOfCourtesy AS titleOfCourtesy, n.birthDate AS birthDate,
+	   n.hireDate AS hireDate, n.notes AS notes, n.photoPath AS photoPath,
+	   n.homePhone AS homePhone, n.extension AS extension, n.country AS country,
+	   n.region AS region, n.city AS city, n.postalCode AS postalCode, n.address AS address
+
+04. Order
+MATCH (n:Order)
+RETURN n.orderID AS orderID, n.freight AS freight, n.orderDate AS orderDate,
+	   n.requiredDate AS requiredDate, n.shippedDate AS shippedDate, n.shipName AS shipName,
+	   n.shipCountry AS shipCountry, n.shipRegion AS shipRegion, n.shipCity AS shipCity,
+	   n.shipPostalCode AS shipPostalCode, n.shipAddress AS shipAddress
+
+05. Product
+MATCH (n:Product)
+RETURN n.productID AS productID, n.productName AS productName, n.unitPrice AS unitPrice,
+	   n.unitsInStock AS unitsInStock, n.unitsOnOrder AS unitsOnOrder,
+	   n.reorderLevel AS reorderLevel, n.discontinued AS discontinued
+
+06. Region
+MATCH (n:Region)
+RETURN n.regionID AS regionID, n.regionDescription AS regionDescription
+
+07. Shipper
+MATCH (n:Shipper)
+RETURN n.shipperID AS shipperID, n.companyName AS companyName, n.phone AS phone
+
+08. Supplier
+MATCH (n:Supplier)
+RETURN n.supplierID AS supplierID, n.companyName AS companyName, n.contactName AS contactName,
+	   n.contactTitle AS contactTitle, n.phone AS phone, n.fax AS fax, n.homePage AS homePage,
+	   n.country AS country, n.city AS city, n.region AS region, n.postalCode AS postalCode,
+	   n.address AS address
+
+09. Territory
+MATCH (n:Territory)
+RETURN n.territoryID AS territoryID, n.territoryDescription AS territoryDescription
+
+--- relationships ---
+01. Customer [PURCHASED] Order
+MATCH (c:Customer)-[:PURCHASED]->(o:Order)
+RETURN c.customerID AS customerID, o.orderID AS orderID
+
+02. Employee [IN_TERRITORY] Territory
+MATCH (e:Employee)-[:IN_TERRITORY]->(t:Territory)
+RETURN e.employeeID AS employeeID, t.territoryID AS territoryID
+
+03. Employee [REPORTS_TO] Employee
+MATCH (e1:Employee)-[:REPORTS_TO]->(e2:Employee)
+RETURN e1.employeeID AS employeeID_1, e2.employeeID AS employeeID_2
+
+04. Employee [SOLD] Order
+MATCH (e:Employee)-[:SOLD]->(o:Order)
+RETURN e.employeeID AS employeeID, o.orderID AS orderID
+
+05. Order [CONTAINS] Product
+MATCH (o:Order)-[r:CONTAINS]->(p:Product)
+RETURN o.id AS orderID, p.id AS productID,
+       r.unitPrice AS unitPrice, r.quantity AS quantity, r.discount AS discount
+
+06. Order [ORDERS] Product
+MATCH (o:Order)-[r:ORDERS]->(p:Product)
+RETURN o.orderID AS orderID, p.productID AS productID,
+       r.unitPrice AS unitPrice, r.quantity AS quantity, r.discount AS discount
+
+07. Product [PART_OF] Category
+MATCH (p:Product)-[:PART_OF]->(c:Category)
+RETURN p.productID AS productID, c.categoryID AS categoryID
+
+08. Shipper [SHIPS] Order
+MATCH (s:Shipper)-[r:SHIPS]->(o:Order)
+RETURN s.shipperID AS shipperID, o.orderID AS orderID
+
+09. Supplier [SUPPLIES] Product
+MATCH (s:Supplier)-[r:SUPPLIES]->(p:Product)
+RETURN s.supplierID AS supplierID, p.productID AS productID
+
+10. Territory [IN_REGION] Region
+MATCH (t:Territory)-[rel:IN_REGION]->(r:Region)
+RETURN t.territoryID AS territoryID, r.regionID AS regionID
+----------------------------------------------------------------------------------------------------------------
+Java records for the Northwind dataset follow the "Content-Based Naming" principle,
+which is the gold standard for mapping graph relationships to object trees.
+----------------------------------------------------------------------------------------------------------------

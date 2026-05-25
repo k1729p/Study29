@@ -1,0 +1,155 @@
+productID,productName,unitPrice,unitsInStock,unitsOnOrder,reorderLevel,discontinued
+1,Chai,18.0,39,0,10,false
+2,Chang,19.0,17,40,25,false
+3,Aniseed Syrup,10.0,13,70,25,false
+4,Chef Anton's Cajun Seasoning,22.0,53,0,0,false
+5,Chef Anton's Gumbo Mix,21.35,0,0,0,true
+6,Grandma's Boysenberry Spread,25.0,120,0,25,false
+7,Uncle Bob's Organic Dried Pears,30.0,15,0,10,false
+8,Northwoods Cranberry Sauce,40.0,6,0,0,false
+9,Mishi Kobe Niku,97.0,29,0,0,true
+10,Ikura,31.0,31,0,0,false
+11,Queso Cabrales,21.0,22,30,30,false
+12,Queso Manchego La Pastora,38.0,86,0,0,false
+13,Konbu,6.0,24,0,5,false
+14,Tofu,23.25,35,0,0,false
+15,Genen Shouyu,15.5,39,0,5,false
+16,Pavlova,17.45,29,0,10,false
+17,Alice Mutton,39.0,0,0,0,true
+18,Carnarvon Tigers,62.5,42,0,0,false
+19,Teatime Chocolate Biscuits,9.2,25,0,5,false
+20,Sir Rodney's Marmalade,81.0,40,0,0,false
+21,Sir Rodney's Scones,10.0,3,40,5,false
+22,Gustaf's Knäckebröd,21.0,104,0,25,false
+23,Tunnbröd,9.0,61,0,25,false
+24,Guaraná Fantástica,4.5,20,0,0,true
+25,NuNuCa Nuß-Nougat-Creme,14.0,76,0,30,false
+26,Gumbär Gummibärchen,31.23,15,0,0,false
+27,Schoggi Schokolade,43.9,49,0,30,false
+28,Rössle Sauerkraut,45.6,26,0,0,true
+29,Thüringer Rostbratwurst,123.79,0,0,0,true
+30,Nord-Ost Matjeshering,25.89,10,0,15,false
+31,Gorgonzola Telino,12.5,0,70,20,false
+32,Mascarpone Fabioli,32.0,9,40,25,false
+33,Geitost,2.5,112,0,20,false
+34,Sasquatch Ale,14.0,111,0,15,false
+35,Steeleye Stout,18.0,20,0,15,false
+36,Inlagd Sill,19.0,112,0,20,false
+37,Gravad lax,26.0,11,50,25,false
+38,Côte de Blaye,263.5,17,0,15,false
+39,Chartreuse verte,18.0,69,0,5,false
+40,Boston Crab Meat,18.4,123,0,30,false
+41,Jack's New England Clam Chowder,9.65,85,0,10,false
+42,Singaporean Hokkien Fried Mee,14.0,26,0,0,true
+43,Ipoh Coffee,46.0,17,10,25,false
+44,Gula Malacca,19.45,27,0,15,false
+45,Rogede sild,9.5,5,70,15,false
+46,Spegesild,12.0,95,0,0,false
+47,Zaanse koeken,9.5,36,0,0,false
+48,Chocolade,12.75,15,70,25,false
+49,Maxilaku,20.0,10,60,15,false
+50,Valkoinen suklaa,16.25,65,0,30,false
+51,Manjimup Dried Apples,53.0,20,0,10,false
+52,Filo Mix,7.0,38,0,25,false
+53,Perth Pasties,32.8,0,0,0,true
+54,Tourtière,7.45,21,0,10,false
+55,Pâté chinois,24.0,115,0,20,false
+56,Gnocchi di nonna Alice,38.0,21,10,30,false
+57,Ravioli Angelo,19.5,36,0,20,false
+58,Escargots de Bourgogne,13.25,62,0,20,false
+59,Raclette Courdavault,55.0,79,0,0,false
+60,Camembert Pierrot,34.0,19,0,0,false
+61,Sirop d'érable,28.5,113,0,25,false
+62,Tarte au sucre,49.3,17,0,0,false
+63,Vegie-spread,43.9,24,0,5,false
+64,Wimmers gute Semmelknödel,33.25,22,80,30,false
+65,Louisiana Fiery Hot Pepper Sauce,21.05,76,0,0,false
+66,Louisiana Hot Spiced Okra,17.0,4,100,20,false
+67,Laughing Lumberjack Lager,14.0,52,0,10,false
+68,Scottish Longbreads,12.5,6,10,15,false
+69,Gudbrandsdalsost,36.0,26,0,15,false
+70,Outback Lager,15.0,15,10,30,false
+71,Flotemysost,21.5,26,0,0,false
+72,Mozzarella di Giovanni,34.8,14,0,0,false
+73,Röd Kaviar,15.0,101,0,5,false
+74,Longlife Tofu,10.0,4,20,5,false
+75,Rhönbräu Klosterbier,7.75,125,0,25,false
+76,Lakkalikööri,18.0,57,0,20,false
+77,Original Frankfurter grüne Soße,13.0,32,0,15,false
+null,Chai,null,null,null,null,null
+null,Chang,null,null,null,null,null
+null,Aniseed Syrup,null,null,null,null,null
+null,Chef Anton's Cajun Seasoning,null,null,null,null,null
+null,Chef Anton's Gumbo Mix,null,null,null,null,null
+null,Grandma's Boysenberry Spread,null,null,null,null,null
+null,Uncle Bob's Organic Dried Pears,null,null,null,null,null
+null,Northwoods Cranberry Sauce,null,null,null,null,null
+null,Mishi Kobe Niku,null,null,null,null,null
+null,Ikura,null,null,null,null,null
+null,Queso Cabrales,null,null,null,null,null
+null,Queso Manchego La Pastora,null,null,null,null,null
+null,Konbu,null,null,null,null,null
+null,Tofu,null,null,null,null,null
+null,Genen Shouyu,null,null,null,null,null
+null,Pavlova,null,null,null,null,null
+null,Alice Mutton,null,null,null,null,null
+null,Carnarvon Tigers,null,null,null,null,null
+null,Teatime Chocolate Biscuits,null,null,null,null,null
+null,Sir Rodney's Marmalade,null,null,null,null,null
+null,Sir Rodney's Scones,null,null,null,null,null
+null,Gustaf's Knäckebröd,null,null,null,null,null
+null,Tunnbröd,null,null,null,null,null
+null,Guaraná Fantástica,null,null,null,null,null
+null,NuNuCa Nuß-Nougat-Creme,null,null,null,null,null
+null,Gumbär Gummibärchen,null,null,null,null,null
+null,Schoggi Schokolade,null,null,null,null,null
+null,Rössle Sauerkraut,null,null,null,null,null
+null,Thüringer Rostbratwurst,null,null,null,null,null
+null,Nord-Ost Matjeshering,null,null,null,null,null
+null,Gorgonzola Telino,null,null,null,null,null
+null,Mascarpone Fabioli,null,null,null,null,null
+null,Geitost,null,null,null,null,null
+null,Sasquatch Ale,null,null,null,null,null
+null,Steeleye Stout,null,null,null,null,null
+null,Inlagd Sill,null,null,null,null,null
+null,Gravad lax,null,null,null,null,null
+null,Côte de Blaye,null,null,null,null,null
+null,Chartreuse verte,null,null,null,null,null
+null,Boston Crab Meat,null,null,null,null,null
+null,Jack's New England Clam Chowder,null,null,null,null,null
+null,Singaporean Hokkien Fried Mee,null,null,null,null,null
+null,Ipoh Coffee,null,null,null,null,null
+null,Gula Malacca,null,null,null,null,null
+null,Rogede sild,null,null,null,null,null
+null,Spegesild,null,null,null,null,null
+null,Zaanse koeken,null,null,null,null,null
+null,Chocolade,null,null,null,null,null
+null,Maxilaku,null,null,null,null,null
+null,Valkoinen suklaa,null,null,null,null,null
+null,Manjimup Dried Apples,null,null,null,null,null
+null,Filo Mix,null,null,null,null,null
+null,Perth Pasties,null,null,null,null,null
+null,Tourtière,null,null,null,null,null
+null,Pâté chinois,null,null,null,null,null
+null,Gnocchi di nonna Alice,null,null,null,null,null
+null,Ravioli Angelo,null,null,null,null,null
+null,Escargots de Bourgogne,null,null,null,null,null
+null,Raclette Courdavault,null,null,null,null,null
+null,Camembert Pierrot,null,null,null,null,null
+null,Sirop d'érable,null,null,null,null,null
+null,Tarte au sucre,null,null,null,null,null
+null,Vegie-spread,null,null,null,null,null
+null,Wimmers gute Semmelknödel,null,null,null,null,null
+null,Louisiana Fiery Hot Pepper Sauce,null,null,null,null,null
+null,Louisiana Hot Spiced Okra,null,null,null,null,null
+null,Laughing Lumberjack Lager,null,null,null,null,null
+null,Scottish Longbreads,null,null,null,null,null
+null,Gudbrandsdalsost,null,null,null,null,null
+null,Outback Lager,null,null,null,null,null
+null,Flotemysost,null,null,null,null,null
+null,Mozzarella di Giovanni,null,null,null,null,null
+null,Röd Kaviar,null,null,null,null,null
+null,Longlife Tofu,null,null,null,null,null
+null,Rhönbräu Klosterbier,null,null,null,null,null
+null,Lakkalikööri,null,null,null,null,null
+null,Original Frankfurter grüne Soße,null,null,null,null,null

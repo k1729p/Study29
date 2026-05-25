@@ -1,0 +1,30 @@
+supplierID,companyName,contactName,contactTitle,phone,fax,homePage,country,city,region,postalCode,address
+1,Exotic Liquids,Charlotte Cooper,Purchasing Manager,(171) 555-2222,NULL,NULL,UK,London,NULL,EC1 4SD,49 Gilbert St.
+2,New Orleans Cajun Delights,Shelley Burke,Order Administrator,(100) 555-4822,NULL,#CAJUN.HTM#,USA,New Orleans,LA,70117,P.O. Box 78934
+3,Grandma Kelly's Homestead,Regina Murphy,Sales Representative,(313) 555-5735,(313) 555-3349,NULL,USA,Ann Arbor,MI,48104,707 Oxford Rd.
+4,Tokyo Traders,Yoshi Nagase,Marketing Manager,(03) 3555-5011,NULL,NULL,Japan,Tokyo,NULL,100,9-8 Sekimai Musashino-shi
+5,Cooperativa de Quesos 'Las Cabras',Antonio del Valle Saavedra,Export Administrator,(98) 598 76 54,NULL,NULL,Spain,Oviedo,Asturias,33007,Calle del Rosal 4
+6,Mayumi's,Mayumi Ohno,Marketing Representative,(06) 431-7877,NULL,Mayumi's (on the World Wide Web)#http://www.microsoft.com/accessdev/sampleapps/mayumi.htm#,Japan,Osaka,NULL,545,92 Setsuko Chuo-ku
+7,Pavlova," Ltd.",Ian Devling,Australia,(03) 444-2343,(03) 444-6588,3058,74 Rose St. Moonie Ponds,Melbourne,Victoria,Marketing Manager
+8,Specialty Biscuits," Ltd.",Peter Wilson,UK,(161) 555-4448,NULL,M14 GSD,29 King's Way,Manchester,NULL,Sales Representative
+9,PB Knäckebröd AB,Lars Peterson,Sales Agent,031-987 65 43,031-987 65 91,NULL,Sweden,Göteborg,NULL,S-345 67,Kaloadagatan 13
+10,Refrescos Americanas LTDA,Carlos Diaz,Marketing Manager,(11) 555 4640,NULL,NULL,Brazil,Sao Paulo,NULL,5442,Av. das Americanas 12.890
+11,Heli Süßwaren GmbH & Co. KG,Petra Winkler,Sales Manager,(010) 9984510,NULL,NULL,Germany,Berlin,NULL,10785,Tiergartenstraße 5
+12,Plutzer Lebensmittelgroßmärkte AG,Martin Bein,International Marketing Mgr.,(069) 992755,NULL,Plutzer (on the World Wide Web)#http://www.microsoft.com/accessdev/sampleapps/plutzer.htm#,Germany,Frankfurt,NULL,60439,Bogenallee 51
+13,Nord-Ost-Fisch Handelsgesellschaft mbH,Sven Petersen,Coordinator Foreign Markets,(04721) 8713,(04721) 8714,NULL,Germany,Cuxhaven,NULL,27478,Frahmredder 112a
+14,Formaggi Fortini s.r.l.,Elio Rossi,Sales Representative,Italy,(0544) 60323,(0544) 60603,48100," 75",Ravenna,NULL,Viale Dante
+15,Norske Meierier,Beate Vileid,Marketing Manager,(0)2-953010,NULL,NULL,Norway,Sandvika,NULL,1320,Hatlevegen 5
+16,Bigfoot Breweries,Cheryl Saylor,Regional Account Rep.,(503) 555-9931,NULL,NULL,USA,Bend,OR,97101,3400 - 8th Avenue Suite 210
+17,Svensk Sjöföda AB,Michael Björn,Sales Representative,08-123 45 67,NULL,NULL,Sweden,Stockholm,NULL,S-123 45,Brovallavägen 231
+18,Aux joyeux ecclésiastiques,Guylène Nodier,Sales Manager,France,(1) 03.83.00.68,(1) 03.83.00.62,75004," Rue des Francs-Bourgeois",Paris,NULL,203
+19,New England Seafood Cannery,Robb Merchant,Wholesale Account Agent,(617) 555-3267,(617) 555-3389,NULL,USA,Boston,MA,02134,Order Processing Dept. 2100 Paul Revere Blvd.
+20,Leka Trading,Chandra Leka,Owner,Singapore,555-8787,NULL,0512," Suite #402",Singapore,NULL,471 Serangoon Loop
+21,Lyngbysild,Niels Petersen,Sales Manager,43844108,43844115,NULL,Denmark,Lyngby,NULL,2800,Lyngbysild Fiskebakken 10
+22,Zaanse Snoepfabriek,Dirk Luchte,Accounting Manager,(12345) 1212,(12345) 1210,NULL,Netherlands,Zaandam,NULL,9999 ZZ,Verkoop Rijnweg 22
+23,Karkki Oy,Anne Heikkonen,Product Manager,(953) 10956,NULL,NULL,Finland,Lappeenranta,NULL,53120,Valtakatu 12
+24,G'day," Mate",Wendy Mackenzie,Australia,(02) 555-5914,(02) 555-4873,2042,170 Prince Edward Parade Hunter's Hill,Sydney,NSW,Sales Representative
+25,Ma Maison,Jean-Guy Lauzon,Marketing Manager,(514) 555-9022,NULL,NULL,Canada,Montréal,Québec,H1J 1C3,2960 Rue St. Laurent
+26,Pasta Buttini s.r.l.,Giovanni Giudici,Order Administrator,Italy,(089) 6547665,(089) 6547667,84100," 153",Salerno,NULL,Via dei Gelsomini
+27,Escargots Nouveaux,Marie Delamare,Sales Manager,France,85.57.00.07,NULL,71300," rue H. Voiron",Montceau,NULL,22
+28,Gai pâturage,Eliane Noz,Sales Representative,France,38.76.98.06,38.76.98.58,74000," rue des Alpes",Annecy,NULL,Bat. B 3
+29,Forêts d'érables,Chantal Goulet,Accounting Manager,(514) 555-2955,(514) 555-2921,NULL,Canada,Ste-Hyacinthe,Québec,J2S 7S8,148 rue Chasseur
