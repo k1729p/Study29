@@ -23,7 +23,7 @@ public class CustomersTree {
     /**
      * Creates tree cell renderer for customers tree.
      */
-    public static DefaultTreeCellRenderer createRendered() {
+    public static DefaultTreeCellRenderer createRenderer() {
         return new DefaultTreeCellRenderer() {
             @Override
             public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,

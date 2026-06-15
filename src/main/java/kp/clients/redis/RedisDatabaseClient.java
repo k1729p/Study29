@@ -20,6 +20,9 @@ import java.util.function.Predicate;
 
 /**
  * Redis database client.
+ * <p>
+ * <a href="https://www.javadoc.io/doc/redis.clients/jedis/latest/index.html">Jedis API</a>
+ * </p>
  */
 public class RedisDatabaseClient {
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -34,13 +37,18 @@ public class RedisDatabaseClient {
      * @param key the execution argument key
      */
     public static void process(String key) {
-
         switch (key) {
             case "RED_01":
                 discoverSchema();
                 break;
             case "RED_02":
                 getDepartmentsAndEmployees();
+                break;
+            case "RED_03":
+                Probabilistic.indexAndQueryDocuments(CLIENT);
+                break;
+            case "RED_04":
+                Probabilistic.probabilisticDataTypes(CLIENT);
                 break;
             default:
                 logger.warn("process(): unhandled key[{}]", key);
@@ -262,7 +270,7 @@ public class RedisDatabaseClient {
      *
      * @return the Redis client
      */
-    private static RedisClient createClient() {
+    static RedisClient createClient() {
         final String host = Tools.getEnvOrDefault("REDIS_HOST", "localhost");
         final int port = Integer.parseInt(Tools.getEnvOrDefault("REDIS_PORT", "6379"));
         final ConnectionPoolConfig poolConfig = new ConnectionPoolConfig();

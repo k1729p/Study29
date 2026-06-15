@@ -34,6 +34,10 @@ public class ElasticsearchDatabaseClient {
     /**
      * Processes the queries.
      *
+     * TODO https://www.elastic.co/docs/reference/elasticsearch/clients/java/usage/searching
+     *
+     * ??? https://heidloff.net/article/semantic-search-vector-eslasticsearch/ ???
+     *
      * @param key the key
      */
     public static void process(String key) {

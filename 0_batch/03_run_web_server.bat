@@ -1,8 +1,7 @@
 @echo off
 set JAVA_HOME=C:\PROGRA~1\JAVA\JDK-25
-set M2_HOME=c:\tools\apache-maven
-set JARFILE=target\Study29-jar-with-dependencies.jar 
-set MAINCLASS=kp.web.httpserver.WebServerLauncher
+set JAR_FILE=target\Study29.jar
+set MAIN_CLASS=kp.web.httpserver.WebServerLauncher
 cd ..
-%JAVA_HOME%\bin\java -cp %JARFILE% %MAINCLASS%
+%JAVA_HOME%\bin\java -cp %JAR_FILE% %MAIN_CLASS%
 ::pause

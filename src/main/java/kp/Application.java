@@ -57,6 +57,8 @@ public class Application {
                 break;
             case "RED_01":
             case "RED_02":
+            case "RED_03":
+            case "RED_04":
                 RedisDatabaseClient.process(arg);
                 break;
             case "SQL_01":

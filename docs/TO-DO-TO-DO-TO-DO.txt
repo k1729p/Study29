@@ -1,7 +1,4 @@
 ========================================================================================================================
-CASSANDRA_HOST=localhost
-CASSANDRA_DC=kp-datacenter
-========================================================================================================================
 In Java 25 project Study29 I am implementing Java database clients to databases in Docker containers.
 Goal of these clients is to have base for query research using modern, professional Java database client.
 These clients run only on local Windows 10 machine.
@@ -10,14 +7,13 @@ Because my other, more complicated, projects are based on Spring Data with Hiber
 these libraries should be not used here (because queries are not complicated here).
 
 Please act as a professional Java 25 Developer.
-For Elasticsearch database please implement class 'kp.clients.elasticsearch.ElasticsearchDatabaseClient'
+For Cassandra database please implement class 'kp.clients.cassandra.CassandraClient'
 with entry method 'public static void process(String key)'.
 For connection to database in Docker container please use these  configuration parameters:
+CASSANDRA_HOST=localhost
+CASSANDRA_DC=kp-datacenter
 ```
-ELASTICSEARCH_HOST=localhost
-ELASTICSEARCH_PORT=9200
-```
-Docker container is using image 'elasticsearch:9.3.2'.
+Docker container is using image 'cassandra:latest' (that is cassandra version 5.0.8).
 
 As a template you could use attached PostgreSqlClient class.
 I know it was good template for other relational databases like Oracle, and this is not relational database.
@@ -32,8 +28,15 @@ The tables 'departments' and 'employees' already exists in target database.
 
 I have added for your information files from other project, which uses Typescript and Node.js and
 queries those 'departments' and 'employees' tables.
-These are the files elasticsearch.constants.ts and elasticsearch.department.repository.ts.
-That Typescript project works as expected with this Elasticsearch database in Docker container.
+These are the files cassandra.constants.ts and cassandra.department.repository.ts.
+That Typescript project works as expected with this Cassandra database in Docker container.
+
+d:\1_node_workspace\Study28\src\repositories\cassandra\cassandra.constants.ts
+d:\1_node_workspace\Study28\src\repositories\cassandra\cassandra.department.repository.ts
+========================================================================================================================
+```
+ELASTICSEARCH_HOST=localhost
+ELASTICSEARCH_PORT=9200
 ========================================================================================================================
 MONGODB_HOST=localhost
 MONGODB_PORT=27017

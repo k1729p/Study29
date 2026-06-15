@@ -21,7 +21,7 @@ public class OrdersTree {
     /**
      * Creates tree cell renderer for orders tree.
      */
-    public static DefaultTreeCellRenderer createRendered() {
+    public static DefaultTreeCellRenderer createRenderer() {
         return new DefaultTreeCellRenderer() {
             @Override
             public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,

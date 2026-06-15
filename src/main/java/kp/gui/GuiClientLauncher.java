@@ -111,11 +111,11 @@ public class GuiClientLauncher {
         if (key == 0) {
             final List<Customer> customerList = Neo4jClient.getCustomers();
             rootNode = CustomersTree.createTreeNodesForCustomers(customerList);
-            renderer = CustomersTree.createRendered();
+            renderer = CustomersTree.createRenderer();
         } else {
             final List<Order> orderList = Neo4jClient.getOrders();
             rootNode = OrdersTree.createTreeNodesForOrders(orderList);
-            renderer = OrdersTree.createRendered();
+            renderer = OrdersTree.createRenderer();
         }
         final JTree tree = new JTree(rootNode);
         renderer.setOpenIcon(null);

@@ -1,8 +1,8 @@
 @echo off
 set JAVA_HOME=C:\PROGRA~1\JAVA\JDK-25
 set M2_HOME=c:\tools\apache-maven
-set JARFILE=target\Study29-jar-with-dependencies.jar 
-set MAINCLASS=kp.Application
+set JAR_FILE=target\Study29.jar
+set MAIN_CLASS=kp.Application
 cd ..
 
 :menu
@@ -137,7 +137,7 @@ goto menu
 :: =================================================================================================================================================
 :RunApplication
 cls
-%JAVA_HOME%\bin\java -cp %JARFILE% %MAINCLASS% %ARG%
+%JAVA_HOME%\bin\java -cp %JAR_FILE% %MAIN_CLASS% %ARG%
 call :RedLabelAndPause
 cls
 goto :eof
