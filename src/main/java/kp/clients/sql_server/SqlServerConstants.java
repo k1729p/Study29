@@ -7,20 +7,7 @@ import java.util.Map;
  * Constants for Microsoft SQL Server database.
  */
 public class SqlServerConstants {
-    static final String DEPARTMENTS_AND_EMPLOYEES_QUERY = """
-            SELECT
-              d.id AS department_id,
-              d.name,
-              e.id AS employee_id,
-              e.first_name,
-              e.last_name,
-              e.title
-            FROM departments d
-            LEFT JOIN employees e ON d.id = e.department_id
-            """;
-
     static final Map<String, String> SCHEMA_DISCOVERY_QUERIES = new LinkedHashMap<>();
-    static final Map<String, String> DEPARTMENTS_AND_EMPLOYEES_QUERIES = new LinkedHashMap<>();
 
     static {
         SCHEMA_DISCOVERY_QUERIES.put("Discover all tables and their columns", """
@@ -62,9 +49,6 @@ public class SqlServerConstants {
                 WHERE i.is_hypothetical = 0 AND i.index_id > 0
                 ORDER BY t.name, i.name
                 """);
-
-        DEPARTMENTS_AND_EMPLOYEES_QUERIES.put("Get departments and employees",
-                DEPARTMENTS_AND_EMPLOYEES_QUERY);
     }
 
     /**

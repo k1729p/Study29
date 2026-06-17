@@ -100,26 +100,7 @@ public class MongoDbClient {
             final List<Employee> employeeList = employeeDocumentList.stream().map(mapper).toList();
             departments.add(new Department(departmentId, name, employeeList));
         });
-        printDepartments(departments);
-    }
-
-    /**
-     * Prints departments.
-     *
-     * @param departments the list of departments
-     */
-    private static void printDepartments(List<Department> departments) {
-        logger.info("- ".repeat(20));
-        departments.forEach(department -> {
-            logger.info("department id[{}]", department.id());
-            logger.info("department name[{}]", department.name());
-            department.employees().forEach(employee -> {
-                logger.info("\t employee id[{}]", employee.id());
-                logger.info("\t employee name[{} {}]", employee.firstName(), employee.lastName());
-                logger.info("\t employee title[{}]", employee.title());
-            });
-            logger.info("- ".repeat(20));
-        });
+        Tools.printDepartments(departments);
     }
 
     /**

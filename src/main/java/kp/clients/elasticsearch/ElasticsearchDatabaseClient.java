@@ -104,7 +104,7 @@ public class ElasticsearchDatabaseClient {
             throw new RuntimeException(e);
         }
         final List<Department> departmentList = loadsDepartmentsAndEmployees(departmentResponse, employeeResponse);
-        printDepartments(departmentList);
+        Tools.printDepartments(departmentList);
     }
 
     /**
@@ -149,25 +149,6 @@ public class ElasticsearchDatabaseClient {
                 .map(entry ->
                         new Department(entry.getKey(), entry.getValue(), departmentEmployees.get(entry.getKey())))
                 .toList();
-    }
-
-    /**
-     * Prints departments to standard logging.
-     *
-     * @param departments the departments
-     */
-    private static void printDepartments(List<Department> departments) {
-        logger.info("- ".repeat(20));
-        departments.forEach(department -> {
-            logger.info("department id[{}]", department.id());
-            logger.info("department name[{}]", department.name());
-            department.employees().forEach(employee -> {
-                logger.info("\t employee id[{}]", employee.id());
-                logger.info("\t employee name[{} {}]", employee.firstName(), employee.lastName());
-                logger.info("\t employee title[{}]", employee.title());
-            });
-            logger.info("- ".repeat(20));
-        });
     }
 
     /**

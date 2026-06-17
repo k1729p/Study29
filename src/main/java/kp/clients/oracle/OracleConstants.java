@@ -7,20 +7,7 @@ import java.util.Map;
  * Constants for Oracle database.
  */
 public class OracleConstants {
-    static final String DEPARTMENTS_AND_EMPLOYEES_QUERY = """
-            SELECT
-              d.id AS department_id,
-              d.name,
-              e.id AS employee_id,
-              e.first_name,
-              e.last_name,
-              e.title
-            FROM departments d
-            LEFT JOIN employees e ON d.id = e.department_id
-            """;
-
     static final Map<String, String> SCHEMA_DISCOVERY_QUERIES = new LinkedHashMap<>();
-    static final Map<String, String> DEPARTMENTS_AND_EMPLOYEES_QUERIES = new LinkedHashMap<>();
 
     static {
         SCHEMA_DISCOVERY_QUERIES.put("Discover tables and their columns", """
@@ -66,9 +53,6 @@ public class OracleConstants {
                 )
                 ORDER BY i.table_name, i.index_name, c.column_position
                 """);
-
-        DEPARTMENTS_AND_EMPLOYEES_QUERIES.put("Get departments and employees",
-                DEPARTMENTS_AND_EMPLOYEES_QUERY);
     }
 
     /**

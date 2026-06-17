@@ -1,7 +1,7 @@
 @echo off
 set JAVA_HOME=C:\PROGRA~1\JAVA\JDK-25
 set M2_HOME=c:\tools\apache-maven
-::set QUIET=--quiet
+set QUIET=--quiet
 set JAR_FILE=target\Study29.jar
 set MAIN_CLASS=kp.Application
 cd ..

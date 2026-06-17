@@ -98,9 +98,14 @@ public class RedisDatabaseClient {
      */
     public static void getDepartmentsAndEmployees() {
 
-        final List<Department> departmentList = assembleDepartments(
-                getDepartmentIdAndNameMap(), getDepartmentEmployeesMap());
-        printDepartments(departmentList);
+        final Map<Integer, String> departmentIdAndNameMap = getDepartmentIdAndNameMap();
+        final Map<Integer, List<Employee>> departmentEmployeesMap = getDepartmentEmployeesMap();
+        final List<Department> departments = departmentIdAndNameMap.keySet().stream().sorted()
+                .map(departmentId -> new Department(departmentId,
+                        departmentIdAndNameMap.get(departmentId),
+                        departmentEmployeesMap.getOrDefault(departmentId, new ArrayList<>())))
+                .toList();
+        Tools.printDepartments(departments);
     }
 
     /**
@@ -112,7 +117,7 @@ public class RedisDatabaseClient {
 
         final List<String> departmentKeys = scanKeysWithPattern("department:*", "department:\\d+");
         final Map<Integer, String> departmentIdAndNameMap = new HashMap<>();
-        for (String departmentKey : departmentKeys) {
+        departmentKeys.forEach(departmentKey -> {
             final Map<String, Object> departmentData = Optional.ofNullable(CLIENT.get(departmentKey))
                     .filter(Predicate.not(String::isEmpty))
                     .map(depJson -> JSON_MAPPER.readValue(depJson, MAP_TYPE_REFERENCE))
@@ -120,7 +125,7 @@ public class RedisDatabaseClient {
             final int id = extractNumber(departmentData, "id");
             final String name = id != 0 ? extractString(departmentData, "name") : "";
             departmentIdAndNameMap.put(id, name);
-        }
+        });
         return departmentIdAndNameMap;
     }
 
@@ -152,23 +157,6 @@ public class RedisDatabaseClient {
             departmentEmployeesMap.computeIfAbsent(departmentId, _ -> new ArrayList<>()).add(employee);
         });
         return departmentEmployeesMap;
-    }
-
-    /**
-     * Assemble final domain structure cleanly ordered by department id.
-     *
-     * @param departmentIdAndNameMap the department id and name map
-     * @param departmentEmployeesMap the department employees map
-     * @return the departments list
-     */
-    private static List<Department> assembleDepartments(
-            Map<Integer, String> departmentIdAndNameMap, Map<Integer, List<Employee>> departmentEmployeesMap) {
-
-        final List<Integer> sortedDeptIds = new ArrayList<>(departmentIdAndNameMap.keySet());
-        Collections.sort(sortedDeptIds);
-        return sortedDeptIds.stream().map(departmentId -> new Department(departmentId,
-                departmentIdAndNameMap.get(departmentId),
-                departmentEmployeesMap.getOrDefault(departmentId, new ArrayList<>()))).toList();
     }
 
     /**
@@ -207,28 +195,6 @@ public class RedisDatabaseClient {
             case null, default -> 0;
         };
     }
-
-    /**
-     * Prints departments and nested employees structure.
-     *
-     * @param departments the departments
-     */
-    private static void printDepartments(List<Department> departments) {
-        logger.info("- ".repeat(20));
-        departments.forEach(department -> {
-            logger.info("department id[{}]", department.id());
-            logger.info("department name[{}]", department.name());
-            department.employees().forEach(employee -> {
-                logger.info("\t employee id[{}]", employee.id());
-                logger.info("\t employee name[{} {}]", employee.firstName(), employee.lastName());
-                logger.info("\t employee title[{}]", employee.title());
-            });
-            logger.info("- ".repeat(20));
-        });
-    }
-    /*
-
-     * */
 
     /**
      * Scans Redis keys using SCAN command (non-blocking cursor-based iteration).
