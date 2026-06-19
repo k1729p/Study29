@@ -33,7 +33,7 @@ public class MongoDbClient {
         try (MongoClient mongoClient = createMongoClient()) {
 
             final MongoDatabase database = mongoClient.getDatabase(
-                    Tools.getEnvOrDefault("MONGODB_DATABASE", "kp_database"));
+                    Tools.getEnvStrOrDefault("MONGODB_DATABASE", "kp_database"));
             switch (key) {
                 case "MON_01":
                     discoverCollectionsAndIndexes(database);
@@ -111,11 +111,11 @@ public class MongoDbClient {
      */
     private static MongoClient createMongoClient() {
 
-        final String host = Tools.getEnvOrDefault("MONGODB_HOST", "localhost");
-        final String port = Tools.getEnvOrDefault("MONGODB_PORT", "27017");
-        final String user = Tools.getEnvOrDefault("MONGODB_USER", "admin");
-        final String password = Tools.getEnvOrDefault("MONGODB_PASSWORD", "mikimiki");
-        final String uri = String.format("mongodb://%s:%s@%s:%s/?authSource=%s",
+        final String host = Tools.getEnvStrOrDefault("MONGODB_HOST", "localhost");
+        final int port = Tools.getEnvIntOrDefault("MONGODB_PORT", 27017);
+        final String user = Tools.getEnvStrOrDefault("MONGODB_USER", "admin");
+        final String password = Tools.getEnvStrOrDefault("MONGODB_PASSWORD", "mikimiki");
+        final String uri = String.format("mongodb://%s:%s@%s:%d/?authSource=%s",
                 user, password, host, port, user);
         return MongoClients.create(uri);
     }

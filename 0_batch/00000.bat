@@ -10,6 +10,6 @@ chcp 65001 > nul 2>&1
 call %M2_HOME%\bin\mvn %QUIET% clean package
 @powershell -Command Write-Host "FINISH" -foreground "Red"
 pause
-set ARG=RED_02
+set ARG=RED_03
 %JAVA_HOME%\bin\java --enable-native-access=ALL-UNNAMED -cp %JAR_FILE% %MAIN_CLASS% %ARG%
 pause

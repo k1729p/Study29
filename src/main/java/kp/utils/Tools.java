@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
@@ -46,12 +47,68 @@ public class Tools {
         logger.info(strBld.toString());
     }
 
+
     /**
      * Helper method to fetch environment variables or return a default value.
+     *
+     * @param key the key
+     * @param defaultValue the default value
+     * @return the environment variable
      */
-    public static String getEnvOrDefault(String key, String defaultValue) {
+    public static int getEnvIntOrDefault(String key, int defaultValue) {
+        return Optional.ofNullable(System.getenv(key))
+                .filter(Predicate.not(String::isBlank))
+                .map(Integer::parseInt)
+                .orElse(defaultValue);
+    }
+
+    /**
+     * Helper method to fetch environment variables or return a default value.
+     *
+     * @param key the key
+     * @param defaultValue the default value
+     * @return the environment variable
+     */
+    public static String getEnvStrOrDefault(String key, String defaultValue) {
         return Optional.ofNullable(System.getenv(key))
                 .filter(Predicate.not(String::isBlank)).orElse(defaultValue);
+    }
+
+    /**
+     * Extracts string from map.
+     *
+     * @param map the data map
+     * @param key the key
+     * @return the string
+     */
+    public static String extractString(Map<String, Object> map, String key) {
+        return switch (map.get(key)) {
+            case String str -> str;
+            case null -> "";
+            default -> map.get(key).toString();
+        };
+    }
+
+    /**
+     * Extracts number from map.
+     *
+     * @param map the data map
+     * @param key the key
+     * @return the number
+     */
+    public static int extractNumber(Map<String, Object> map, String key) {
+        return switch (map.get(key)) {
+            case Integer i -> i;
+            case String str -> {
+                try {
+                    yield Integer.parseInt(str);
+                } catch (NumberFormatException e) {
+                    logger.warn("extractNumber(): Cannot parse [{}] as integer", str);
+                    yield 0;
+                }
+            }
+            case null, default -> 0;
+        };
     }
 
     /**

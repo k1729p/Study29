@@ -158,8 +158,8 @@ public class ElasticsearchDatabaseClient {
      */
     private static RestClient createRestClient() {
 
-        final String host = Tools.getEnvOrDefault("ELASTICSEARCH_HOST", "localhost");
-        final int port = Integer.parseInt(Tools.getEnvOrDefault("ELASTICSEARCH_PORT", "9200"));
+        final String host = Tools.getEnvStrOrDefault("ELASTICSEARCH_HOST", "localhost");
+        final int port = Tools.getEnvIntOrDefault("ELASTICSEARCH_PORT", 9200);
         return RestClient.builder(new HttpHost(host, port, "http")).build();
     }
 }

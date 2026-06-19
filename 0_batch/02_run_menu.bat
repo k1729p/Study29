@@ -30,13 +30,13 @@ echo [M] MS SQL Server Departments and Employees
 echo - - - - - - - - - - - - - - -
 echo [N] Redis Schema Discovery
 echo [O] Redis Departments and Employees
+echo [P] Redis Probabilistic Data Types
 echo - - - - - - - - - - - - - - -
-echo [P] MongoDB Collections and Indexes Discovery
-echo [Q] MongoDB Departments and Employees
+echo [Q] MongoDB Collections and Indexes Discovery
+echo [R] MongoDB Departments and Employees
 echo - - - - - - - - - - - - - - -
-echo [R] Elasticsearch Schema Discovery
-echo [S] Elasticsearch Departments and Employees
-::echo [T]
+echo [S] Elasticsearch Schema Discovery
+echo [T] Elasticsearch Departments and Employees
 ::echo [U]
 ::echo [V]
 ::echo [W]
@@ -108,21 +108,24 @@ if /i "%KEY:~0,1%"=="A" (
   call :RunApplication
 ) else if /i "%KEY%"=="P" (
   set LABEL=[%KEY%] run application
-  set ARG=MON_01
+  set ARG=RED_03
   call :RunApplication
 ) else if /i "%KEY%"=="Q" (
   set LABEL=[%KEY%] run application
-  set ARG=MON_02
+  set ARG=MON_01
   call :RunApplication
 ) else if /i "%KEY%"=="R" (
   set LABEL=[%KEY%] run application
-  set ARG=ELA_01
+  set ARG=MON_02
   call :RunApplication
 ) else if /i "%KEY%"=="S" (
   set LABEL=[%KEY%] run application
+  set ARG=ELA_01
+  call :RunApplication
+) else if /i "%KEY%"=="T" (
+  set LABEL=[%KEY%] run application
   set ARG=ELA_02
   call :RunApplication
-@REM ) else if /i "%KEY%"=="T" (
 @REM ) else if /i "%KEY%"=="U" (
 @REM ) else if /i "%KEY%"=="V" (
 @REM ) else if /i "%KEY%"=="W" (

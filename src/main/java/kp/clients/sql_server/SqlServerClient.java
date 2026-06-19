@@ -54,15 +54,15 @@ public class SqlServerClient {
      */
     private static HikariDataSource createConnectionPool() {
 
-        final String host = Tools.getEnvOrDefault("SQL_SERVER_HOST", "localhost");
-        final String port = Tools.getEnvOrDefault("SQL_SERVER_PORT", "1433");
-        final String database = Tools.getEnvOrDefault("SQL_SERVER_DATABASE", "master");
-        final String user = Tools.getEnvOrDefault("SQL_SERVER_USER", "sa");
-        final String password = Tools.getEnvOrDefault("SQL_SERVER_PASSWORD", "01+AZ+az");
+        final String host = Tools.getEnvStrOrDefault("SQL_SERVER_HOST", "localhost");
+        final int port = Tools.getEnvIntOrDefault("SQL_SERVER_PORT", 1433);
+        final String database = Tools.getEnvStrOrDefault("SQL_SERVER_DATABASE", "master");
+        final String user = Tools.getEnvStrOrDefault("SQL_SERVER_USER", "sa");
+        final String password = Tools.getEnvStrOrDefault("SQL_SERVER_PASSWORD", "01+AZ+az");
         // Appended security encryption options necessary for modern local dockerized instances
-        final String jdbcUrl = String.format("jdbc:sqlserver://%s:%s;databaseName=%s;encrypt=true;trustServerCertificate=true;",
+        final String jdbcUrl = String.format("jdbc:sqlserver://%s:%d;databaseName=%s;encrypt=true;trustServerCertificate=true;",
                 host, port, database);
-        return new HikariDataSource(RelationalDatabaseClient.buildHikariConfig(
-                "com.microsoft.sqlserver.jdbc.SQLServerDriver", jdbcUrl, user, password));
+        return RelationalDatabaseClient.createHikariDataSource(
+                "com.microsoft.sqlserver.jdbc.SQLServerDriver", jdbcUrl, user, password);
     }
 }

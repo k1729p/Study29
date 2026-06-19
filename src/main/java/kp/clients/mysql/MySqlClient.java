@@ -56,13 +56,13 @@ public class MySqlClient {
      */
     private static HikariDataSource createConnectionPool() {
 
-        final String host = Tools.getEnvOrDefault("MY_SQL_HOST", "localhost");
-        final String port = Tools.getEnvOrDefault("MY_SQL_PORT", "3306");
-        final String database = Tools.getEnvOrDefault("MY_SQL_DATABASE", "kp_database");
-        final String user = Tools.getEnvOrDefault("MY_SQL_USER", "kp");
-        final String password = Tools.getEnvOrDefault("MY_SQL_PASSWORD", "mikimiki");
-        final String jdbcUrl = String.format("jdbc:mysql://%s:%s/%s", host, port, database);
-        return new HikariDataSource(RelationalDatabaseClient.buildHikariConfig(
-                "com.mysql.cj.jdbc.Driver", jdbcUrl, user, password));
+        final String host = Tools.getEnvStrOrDefault("MY_SQL_HOST", "localhost");
+        final int port = Tools.getEnvIntOrDefault("MY_SQL_PORT", 3306);
+        final String database = Tools.getEnvStrOrDefault("MY_SQL_DATABASE", "kp_database");
+        final String user = Tools.getEnvStrOrDefault("MY_SQL_USER", "kp");
+        final String password = Tools.getEnvStrOrDefault("MY_SQL_PASSWORD", "mikimiki");
+        final String jdbcUrl = String.format("jdbc:mysql://%s:%d/%s", host, port, database);
+        return RelationalDatabaseClient.createHikariDataSource(
+                "com.mysql.cj.jdbc.Driver", jdbcUrl, user, password);
     }
 }

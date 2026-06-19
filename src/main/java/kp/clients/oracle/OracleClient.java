@@ -56,13 +56,13 @@ public class OracleClient {
      */
     private static HikariDataSource createConnectionPool() {
 
-        final String host = Tools.getEnvOrDefault("ORACLE_HOST", "localhost");
-        final String port = Tools.getEnvOrDefault("ORACLE_PORT", "1521");
-        final String database = Tools.getEnvOrDefault("ORACLE_DATABASE", "FREEPDB1");
-        final String user = Tools.getEnvOrDefault("ORACLE_USER", "system");
-        final String password = Tools.getEnvOrDefault("ORACLE_PASSWORD", "mikimiki");
-        final String jdbcUrl = String.format("jdbc:oracle:thin:@//%s:%s/%s", host, port, database);
-        return new HikariDataSource(RelationalDatabaseClient.buildHikariConfig(
-                "oracle.jdbc.OracleDriver", jdbcUrl, user, password));
+        final String host = Tools.getEnvStrOrDefault("ORACLE_HOST", "localhost");
+        final int port = Tools.getEnvIntOrDefault("ORACLE_PORT", 1521);
+        final String database = Tools.getEnvStrOrDefault("ORACLE_DATABASE", "FREEPDB1");
+        final String user = Tools.getEnvStrOrDefault("ORACLE_USER", "system");
+        final String password = Tools.getEnvStrOrDefault("ORACLE_PASSWORD", "mikimiki");
+        final String jdbcUrl = String.format("jdbc:oracle:thin:@//%s:%d/%s", host, port, database);
+        return RelationalDatabaseClient.createHikariDataSource(
+                "oracle.jdbc.OracleDriver", jdbcUrl, user, password);
     }
 }

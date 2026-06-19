@@ -53,7 +53,7 @@ RETURN path1, path2, path3, path4, path5, path6, path7, path8
 ## Technical Mapping to Your Stack
 
 | Concept [6, 7, 8, 9, 10] | Your Current Stack (SQL/NoSQL) | Neo4j Equivalent |
-|---|---|---|
+|--|--|--|
 | Data Rows | Rows in Oracle/Postgres or Docs in Mongo | Nodes with key-value properties. |
 | Join Tables | Many-to-Many junction tables or FK columns | Relationships (explicit, directed, named paths). |
 | Query Language | SQL, MQL, or Elastic DSL | Cypher (a declarative visual graph language). |

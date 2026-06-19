@@ -20,9 +20,6 @@ import java.util.function.Predicate;
 
 /**
  * Redis database client.
- * <p>
- * <a href="https://www.javadoc.io/doc/redis.clients/jedis/latest/index.html">Jedis API</a>
- * </p>
  */
 public class RedisDatabaseClient {
     private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -45,10 +42,12 @@ public class RedisDatabaseClient {
                 getDepartmentsAndEmployees();
                 break;
             case "RED_03":
-                Probabilistic.indexAndQueryDocuments(CLIENT);
-                break;
-            case "RED_04":
-                Probabilistic.probabilisticDataTypes(CLIENT);
+                logger.info("- ".repeat(20));
+                ProbabilisticDataTypes.checkItemMembership(CLIENT);
+                ProbabilisticDataTypes.calculateSetCardinality(CLIENT);
+                ProbabilisticDataTypes.countItemFrequency(CLIENT);
+                ProbabilisticDataTypes.calculateQuantiles(CLIENT);
+                ProbabilisticDataTypes.calculateRankings(CLIENT);
                 break;
             default:
                 logger.warn("process(): unhandled key[{}]", key);
@@ -96,7 +95,7 @@ public class RedisDatabaseClient {
     /**
      * Gets departments and employees.
      */
-    public static void getDepartmentsAndEmployees() {
+    private static void getDepartmentsAndEmployees() {
 
         final Map<Integer, String> departmentIdAndNameMap = getDepartmentIdAndNameMap();
         final Map<Integer, List<Employee>> departmentEmployeesMap = getDepartmentEmployeesMap();
@@ -122,8 +121,8 @@ public class RedisDatabaseClient {
                     .filter(Predicate.not(String::isEmpty))
                     .map(depJson -> JSON_MAPPER.readValue(depJson, MAP_TYPE_REFERENCE))
                     .orElse(Map.of());
-            final int id = extractNumber(departmentData, "id");
-            final String name = id != 0 ? extractString(departmentData, "name") : "";
+            final int id = Tools.extractNumber(departmentData, "id");
+            final String name = id != 0 ? Tools.extractString(departmentData, "name") : "";
             departmentIdAndNameMap.put(id, name);
         });
         return departmentIdAndNameMap;
@@ -145,55 +144,35 @@ public class RedisDatabaseClient {
                 return;
             }
             final Map<String, Object> employeeData = JSON_MAPPER.readValue(empJsonOpt.get(), MAP_TYPE_REFERENCE);
-            final int id = extractNumber(employeeData, "id");
-            final int departmentId = extractNumber(employeeData, "departmentId");
+            final int id = Tools.extractNumber(employeeData, "id");
+            final int departmentId = Tools.extractNumber(employeeData, "departmentId");
             if (id == 0 || departmentId == 0) {
                 return;
             }
             final Employee employee = new Employee(id,
-                    extractString(employeeData, "firstName"),
-                    extractString(employeeData, "lastName"),
-                    Title.fromString(extractString(employeeData, "title")));
+                    Tools.extractString(employeeData, "firstName"),
+                    Tools.extractString(employeeData, "lastName"),
+                    Title.fromString(Tools.extractString(employeeData, "title")));
             departmentEmployeesMap.computeIfAbsent(departmentId, _ -> new ArrayList<>()).add(employee);
         });
         return departmentEmployeesMap;
     }
 
     /**
-     * Extracts string from map.
+     * Redis pool initialization.
      *
-     * @param map the data map
-     * @param key the key
-     * @return the string
+     * @return the Redis client
      */
-    private static String extractString(Map<String, Object> map, String key) {
-        return switch (map.get(key)) {
-            case String str -> str;
-            case null -> "";
-            default -> map.get(key).toString();
-        };
-    }
+    private static RedisClient createClient() {
 
-    /**
-     * Extracts number from map.
-     *
-     * @param map the data map
-     * @param key the key
-     * @return the number
-     */
-    private static int extractNumber(Map<String, Object> map, String key) {
-        return switch (map.get(key)) {
-            case Integer i -> i;
-            case String str -> {
-                try {
-                    yield Integer.parseInt(str);
-                } catch (NumberFormatException e) {
-                    logger.warn("extractNumber(): Cannot parse [{}] as integer", str);
-                    yield 0;
-                }
-            }
-            case null, default -> 0;
-        };
+        final String host = Tools.getEnvStrOrDefault("REDIS_HOST", "localhost");
+        final int port = Tools.getEnvIntOrDefault("REDIS_PORT", 6379);
+        final ConnectionPoolConfig poolConfig = new ConnectionPoolConfig();
+        poolConfig.setMaxTotal(10);
+        poolConfig.setMaxIdle(5);
+        poolConfig.setMinIdle(2);
+        poolConfig.setMaxWait(Duration.ofSeconds(30));
+        return RedisClient.builder().hostAndPort(host, port).poolConfig(poolConfig).build();
     }
 
     /**
@@ -220,31 +199,15 @@ public class RedisDatabaseClient {
     private static List<String> scanKeysWithPattern(String pattern) {
 
         final String scanPattern = pattern != null ? pattern : "*";
-        final List<String> keys = new ArrayList<>();
+        final List<String> keyList = new ArrayList<>();
         String cursor = "0";
         do {
             final ScanParams scanParams = new ScanParams().match(scanPattern);
             final ScanResult<String> scanResult = CLIENT.scan(cursor, scanParams);
-            keys.addAll(scanResult.getResult());
+            keyList.addAll(scanResult.getResult());
             cursor = scanResult.getCursor();
         } while (!cursor.equals("0"));
-        return keys;
-    }
-
-    /**
-     * Redis pool initialization.
-     *
-     * @return the Redis client
-     */
-    static RedisClient createClient() {
-        final String host = Tools.getEnvOrDefault("REDIS_HOST", "localhost");
-        final int port = Integer.parseInt(Tools.getEnvOrDefault("REDIS_PORT", "6379"));
-        final ConnectionPoolConfig poolConfig = new ConnectionPoolConfig();
-        poolConfig.setMaxTotal(10);
-        poolConfig.setMaxIdle(5);
-        poolConfig.setMinIdle(2);
-        poolConfig.setMaxWait(Duration.ofSeconds(30));
-        return RedisClient.builder().hostAndPort(host, port).poolConfig(poolConfig).build();
+        return keyList;
     }
 
 }

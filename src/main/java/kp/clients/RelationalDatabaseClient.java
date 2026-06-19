@@ -1,6 +1,7 @@
 package kp.clients;
 
 import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import kp.domain.company.Department;
 import kp.domain.company.Employee;
 import kp.domain.company.Title;
@@ -111,29 +112,29 @@ public class RelationalDatabaseClient {
     }
 
     /**
-     * Creates the Hikari configuration.
+     * Creates the Hikari data source.
      *
      * @param driverClass the driver class
      * @param jdbcUrl     the JDBC URL
      * @param user        the user
      * @param password    the password
-     * @return the configuration
+     * @return the Hikari data source
      */
-    public static HikariConfig buildHikariConfig(String driverClass, String jdbcUrl,
-                                                 String user, String password) {
+    public static HikariDataSource createHikariDataSource(String driverClass, String jdbcUrl,
+                                                          String user, String password) {
 
-        final HikariConfig config = new HikariConfig();
-        config.setDriverClassName(driverClass);
-        config.setJdbcUrl(jdbcUrl);
-        config.setUsername(user);
-        config.setPassword(password);
-        config.setMaximumPoolSize(10);
-        config.setMinimumIdle(2);
-        config.setConnectionTimeout(30_000);
-        config.setIdleTimeout(600_000);
-        config.setMaxLifetime(1_800_000);
-        config.setInitializationFailTimeout(1);
-        return config;
+        final HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(driverClass);
+        hikariConfig.setJdbcUrl(jdbcUrl);
+        hikariConfig.setUsername(user);
+        hikariConfig.setPassword(password);
+        hikariConfig.setMaximumPoolSize(10);
+        hikariConfig.setMinimumIdle(2);
+        hikariConfig.setConnectionTimeout(30_000);
+        hikariConfig.setIdleTimeout(600_000);
+        hikariConfig.setMaxLifetime(1_800_000);
+        hikariConfig.setInitializationFailTimeout(1);
+        return new HikariDataSource(hikariConfig);
     }
 
     /**

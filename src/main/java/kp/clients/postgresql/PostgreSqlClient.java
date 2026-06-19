@@ -56,14 +56,14 @@ public class PostgreSqlClient {
      */
     private static HikariDataSource createConnectionPool() {
 
-        final String host = Tools.getEnvOrDefault("POSTGRESQL_HOST", "localhost");
-        final String port = Tools.getEnvOrDefault("POSTGRESQL_PORT", "5432");
-        final String database = Tools.getEnvOrDefault("POSTGRESQL_DATABASE", "postgres");
-        final String user = Tools.getEnvOrDefault("POSTGRESQL_USER", "postgres");
-        final String password = Tools.getEnvOrDefault("POSTGRESQL_PASSWORD", "mikimiki");
-        final String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", host, port, database);
-        return new HikariDataSource(RelationalDatabaseClient.buildHikariConfig(
-                "org.postgresql.Driver", jdbcUrl, user, password));
+        final String host = Tools.getEnvStrOrDefault("POSTGRESQL_HOST", "localhost");
+        final int port = Tools.getEnvIntOrDefault("POSTGRESQL_PORT", 5432);
+        final String database = Tools.getEnvStrOrDefault("POSTGRESQL_DATABASE", "postgres");
+        final String user = Tools.getEnvStrOrDefault("POSTGRESQL_USER", "postgres");
+        final String password = Tools.getEnvStrOrDefault("POSTGRESQL_PASSWORD", "mikimiki");
+        final String jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", host, port, database);
+        return RelationalDatabaseClient.createHikariDataSource(
+                "org.postgresql.Driver", jdbcUrl, user, password);
     }
 
 }

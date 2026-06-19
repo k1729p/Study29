@@ -267,11 +267,11 @@ public class Neo4jClient {
      */
     private static Driver createConnectionPool() {
 
-        final String host = Tools.getEnvOrDefault("NEO4J_HOST", "localhost");
-        final String port = Tools.getEnvOrDefault("NEO4J_PORT", "7687");
-        final String user = Tools.getEnvOrDefault("NEO4J_USER", "neo4j");
-        final String password = Tools.getEnvOrDefault("NEO4J_PASSWORD", "mikimiki");
-        final String uri = String.format("bolt://%s:%s", host, port);
+        final String host = Tools.getEnvStrOrDefault("NEO4J_HOST", "localhost");
+        final int port = Tools.getEnvIntOrDefault("NEO4J_PORT", 7687);
+        final String user = Tools.getEnvStrOrDefault("NEO4J_USER", "neo4j");
+        final String password = Tools.getEnvStrOrDefault("NEO4J_PASSWORD", "mikimiki");
+        final String uri = String.format("bolt://%s:%d", host, port);
         return GraphDatabase.driver(uri, AuthTokens.basic(user, password));
     }
 }
