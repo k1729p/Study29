@@ -1,4 +1,13 @@
 # Neo4j
+### Using Northwind Dataset with Neo4j
+1. Northwind initialization deletes all data from Neo4j database. \
+   Nodes 'Department' and 'Employee' are deleted! \
+   Node 'Employee' is replaced by node 'Employee' from Northwind dataset. 
+2. Before running menu point "Neo4j Northwind Initialization" \
+   execute batch file "datasets\Northwind\copy_to_Docker.bat". \
+   It copies CSV files in Docker container 'neo4j'.
+
+### Documentation
 - [Cypher Cheat Sheet](https://neo4j.com/docs/cypher-cheat-sheet/25/all/)
 - [Cypher Manual](https://neo4j.com/docs/cypher-manual/)
 - [Java Manual](https://neo4j.com/docs/java-manual/)

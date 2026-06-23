@@ -1,11 +1,16 @@
 package kp.clients.neo4j;
 
+import kp.domain.company.Department;
 import kp.domain.northwind.*;
+import kp.utils.DatasetTools;
 import kp.utils.Tools;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
+import org.neo4j.driver.types.Node;
+import org.slf4j.LoggerFactory;
 import tools.jackson.databind.ObjectMapper;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +26,11 @@ import static kp.clients.neo4j.Neo4jConstants.*;
  * Neo4j client.
  * <p>
  * The Driver object is actually the Connection Pool. Creating it is heavy.
- * You should create the Driver once when your application starts and close it when the app shuts down.
+ * The driver should be created once when application starts and closed when application shuts down.
  * </p>
  */
 public class Neo4jClient {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     /**
@@ -43,7 +49,10 @@ public class Neo4jClient {
                     executeCypherQuery(driver, SCHEMA_DISCOVERY_QUERIES);
                     break;
                 case "NEO_02":
-                    executeCypherQuery(driver, DEPARTMENTS_AND_EMPLOYEES_QUERIES);
+                    DatasetTools.recreateDepartmentsDatasetInNeo4j(driver);
+                    final List<Department> departmentList = getDepartments(driver);
+                    Tools.printDepartments(departmentList);
+                    executeCypherQuery(driver, List.of(DEPARTMENTS_AND_EMPLOYEES_QUERY));
                     break;
                 case "NEO_03":
                     executeCypherQuery(driver, NORTHWIND_INITIALIZATION_QUERIES_1);
@@ -59,9 +68,43 @@ public class Neo4jClient {
                     break;
             }
         } catch (Exception e) {
-            System.out.printf("process(): exception[%s]", e.getMessage());
+            logger.error("process(): exception[{}]", e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+    /**
+     * Gets departments and employees
+     *
+     * @param driver the driver for Neo4j server
+     * @return the list with departments
+     */
+    private static List<Department> getDepartments(Driver driver) {
+
+        final List<Record> recordList = new ArrayList<>();
+        final TransactionCallback<Result> transactionCallback = transactionContext -> {
+            recordList.addAll(transactionContext.run(DEPARTMENTS_AND_EMPLOYEES_QUERY).list());
+            return null;
+        };
+        try (Session session = driver.session()) {
+            session.executeWrite(transactionCallback);
+        } catch (Exception e) {
+            logger.error("getDepartments(): exception[{}]", e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return recordList.stream().map(record -> {
+            final List<kp.domain.company.Employee> employees = record.get("employees")
+                    .asList(Value::asNode).stream()
+                    .map(empNode ->
+                            new kp.domain.company.Employee(
+                                    (int) empNode.get("id").asLong(),
+                                    empNode.get("firstName").asString(),
+                                    empNode.get("lastName").asString(),
+                                    kp.domain.company.Title.fromString(empNode.get("title").asString(""))))
+                    .toList();
+            final Node deptNode = record.get("department").asNode();
+            return new kp.domain.company.Department(
+                    (int) deptNode.get("id").asLong(), deptNode.get("name").asString(), employees);
+        }).toList();
     }
 
     /**
@@ -101,7 +144,7 @@ public class Neo4jClient {
         try (Session session = driver.session()) {
             session.executeWrite(transactionCallback);
         } catch (Exception e) {
-            System.out.printf("executeCypherQuery(): exception[%s]", e.getMessage());
+            logger.error("executeTransaction(): exception[{}]", e.getMessage());
             throw new RuntimeException(e);
         }
         return recordList;
@@ -116,7 +159,7 @@ public class Neo4jClient {
     public static String processForWeb(int selector) {
 
         Logger.getLogger("org.neo4j.driver").setLevel(Level.WARNING);
-        String queryText;
+        final String queryText;
         Map<String, Object> paramsMap = Map.of();
         switch (selector) {
             case 1:
@@ -132,11 +175,11 @@ public class Neo4jClient {
             default:
                 return "";
         }
-        EagerResult eagerResult;
+        final EagerResult eagerResult;
         try (Driver driver = createConnectionPool()) {
             eagerResult = driver.executableQuery(queryText).withParameters(paramsMap).execute();
         } catch (Exception e) {
-            System.out.printf("processForWeb(): exception[%s]", e.getMessage());
+            logger.error("processForWeb(): exception[{}]", e.getMessage());
             throw new RuntimeException(e);
         }
         return Optional.ofNullable(eagerResult)
@@ -157,7 +200,7 @@ public class Neo4jClient {
      */
     public static List<Customer> getCustomers() {
 
-        List<Customer> customerList;
+        final List<Customer> customerList;
         try (Driver driver = createConnectionPool()) {
             driver.verifyConnectivity();
             customerList = driver.executableQuery(GET_CUSTOMERS_QUERY)
@@ -166,7 +209,7 @@ public class Neo4jClient {
                     .map(record -> record.get("customerTree").as(Customer.class))
                     .toList();
         } catch (Exception e) {
-            System.out.printf("getCustomers(): exception[%s]", e.getMessage());
+            logger.error("getCustomers(): exception[{}]", e.getMessage());
             throw new RuntimeException(e);
         }
         customerList.forEach(Neo4jClient::printCustomer);
@@ -202,7 +245,7 @@ public class Neo4jClient {
      */
     public static List<Order> getOrders() {
 
-        List<Order> orderList;
+        final List<Order> orderList;
         try (Driver driver = createConnectionPool()) {
             driver.verifyConnectivity();
             orderList = driver.executableQuery(GET_ORDERS_QUERY)
@@ -210,7 +253,7 @@ public class Neo4jClient {
                     .map(record -> record.get("ordersTree").as(Order.class))
                     .toList();
         } catch (Exception e) {
-            System.out.printf("getOrders(): exception[%s]", e.getMessage());
+            logger.error("getOrders(): exception[{}]", e.getMessage());
             throw new RuntimeException(e);
         }
         orderList.forEach(Neo4jClient::printOrder);

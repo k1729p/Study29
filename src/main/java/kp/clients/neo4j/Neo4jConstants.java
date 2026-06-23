@@ -17,11 +17,12 @@ public class Neo4jConstants {
             "MATCH (n) ORDER BY labels(n) RETURN DISTINCT labels(n)",
             "MATCH ()-[relation]->() ORDER BY type(relation) RETURN DISTINCT type(relation)");
 
-    static final List<String> DEPARTMENTS_AND_EMPLOYEES_QUERIES = List.of(
-            "MATCH path = (:Department)<-[:WORKS_IN]-(:Employee) RETURN path",
-            """
-                    MATCH (employee:Employee)-[:WORKS_IN]->(department:Department)
-                    RETURN department, employee""");
+    static final String DEPARTMENTS_AND_EMPLOYEES_QUERY = """
+            MATCH (department:Department)
+            OPTIONAL MATCH (employee:Employee)-[:WORKS_IN]->(department)
+            ORDER BY department.id ASC, employee.id ASC
+            RETURN department, collect(employee) AS employees
+            """;
 
     static final List<String> NORTHWIND_INITIALIZATION_QUERIES_1 = List.of(
             // ############################################################ CREATING CONSTRAINTS

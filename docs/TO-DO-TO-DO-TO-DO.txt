@@ -34,7 +34,6 @@ That Typescript project works as expected with this Cassandra database in Docker
 d:\1_node_workspace\Study28\src\repositories\cassandra\cassandra.constants.ts
 d:\1_node_workspace\Study28\src\repositories\cassandra\cassandra.department.repository.ts
 ========================================================================================================================
-```
 ELASTICSEARCH_HOST=localhost
 ELASTICSEARCH_PORT=9200
 ========================================================================================================================
@@ -66,7 +65,6 @@ POSTGRESQL_PORT=5432
 POSTGRESQL_DATABASE=postgres
 POSTGRESQL_USER=postgres
 POSTGRESQL_PASSWORD=mikimiki
-
 ========================================================================================================================
 REDIS_HOST=localhost
 REDIS_PORT=6379

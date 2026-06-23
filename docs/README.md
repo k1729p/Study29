@@ -6,7 +6,9 @@ Database Clients
 - MongoDB
 - MySQL
 - Neo4j
+  - graph algorithms (PageRank, Pathfinding) 
 - Oracle
 - PostgreSQL
 - Redis
+  - probabilistic data structures (Bloom filter, Cuckoo filter, HyperLogLog, Count-min sketch, t-digest, Top-K)
 - SQL Server

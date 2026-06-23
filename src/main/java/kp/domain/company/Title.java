@@ -1,5 +1,7 @@
 package kp.domain.company;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Optional;
 
 /**
@@ -46,6 +48,7 @@ public enum Title {
      * @param name the title name
      * @return the title
      */
+    @JsonCreator
     public static Title fromString(String name) {
         return Optional.ofNullable(name).map(String::toUpperCase)
                 .map(Title::valueOf).orElse(null);
