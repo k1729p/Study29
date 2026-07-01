@@ -1,6 +1,8 @@
 @echo off
 set JAVA_HOME=C:\PROGRA~1\JAVA\JDK-25
 set M2_HOME=c:\tools\apache-maven
+set JVM_ARGS=--enable-native-access=ALL-UNNAMED
+set JVM_ARGS=%JVM_ARGS% --sun-misc-unsafe-memory-access=allow
 set JAR_FILE=target\Study29.jar
 set MAIN_CLASS=kp.Application
 cd ..
@@ -37,8 +39,9 @@ echo [R] MongoDB Departments and Employees
 echo - - - - - - - - - - - - - - -
 echo [S] Elasticsearch Schema Discovery
 echo [T] Elasticsearch Departments and Employees
-::echo [U]
-::echo [V]
+echo - - - - - - - - - - - - - - -
+echo [U] Cassandra Schema Discovery
+echo [V] Cassandra Departments and Employees
 ::echo [W]
 ::echo [X]
 ::echo [Y]
@@ -126,8 +129,14 @@ if /i "%KEY:~0,1%"=="A" (
   set LABEL=[%KEY%] run application
   set ARG=ELA_02
   call :RunApplication
-@REM ) else if /i "%KEY%"=="U" (
-@REM ) else if /i "%KEY%"=="V" (
+) else if /i "%KEY%"=="U" (
+  set LABEL=[%KEY%] run application
+  set ARG=CAS_01
+  call :RunApplication
+) else if /i "%KEY%"=="V" (
+  set LABEL=[%KEY%] run application
+  set ARG=CAS_02
+  call :RunApplication
 @REM ) else if /i "%KEY%"=="W" (
 @REM ) else if /i "%KEY%"=="X" (
 @REM ) else if /i "%KEY%"=="Y" (
@@ -140,7 +149,7 @@ goto menu
 :: =================================================================================================================================================
 :RunApplication
 cls
-%JAVA_HOME%\bin\java -cp %JAR_FILE% %MAIN_CLASS% %ARG%
+%JAVA_HOME%\bin\java %JVM_ARGS% -cp %JAR_FILE% %MAIN_CLASS% %ARG%
 call :RedLabelAndPause
 cls
 goto :eof

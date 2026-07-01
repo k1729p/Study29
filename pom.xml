@@ -12,20 +12,20 @@
         <mainClass>kp.Application</mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <elasticsearch-java.version>9.4.1</elasticsearch-java.version>
-        <elasticsearch-rest-client.version>9.4.1</elasticsearch-rest-client.version>
+        <elasticsearch-java.version>9.4.2</elasticsearch-java.version>
+        <elasticsearch-rest-client.version>9.4.2</elasticsearch-rest-client.version>
         <exec-maven-plugin.version>3.6.3</exec-maven-plugin.version>
-        <hikaricp.version>7.0.2</hikaricp.version>
-        <httpclient.version>4.5.14</httpclient.version>
-        <jackson-databind.version>3.1.3</jackson-databind.version>
-        <jedis.version>7.5.0</jedis.version>
-        <logback-classic.version>1.5.32</logback-classic.version>
+        <hikaricp.version>7.1.0</hikaricp.version>
+        <jackson-databind.version>3.2.0</jackson-databind.version>
+        <java-driver-core.version>4.19.3</java-driver-core.version>
+        <jedis.version>7.5.2</jedis.version>
+        <logback-classic.version>1.5.37</logback-classic.version>
         <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-shade-plugin.version>3.6.2</maven-shade-plugin.version>
-        <mongodb-driver-sync.version>5.7.0</mongodb-driver-sync.version>
+        <mongodb-driver-sync.version>5.8.0</mongodb-driver-sync.version>
         <mysql-connector-j.version>9.7.0</mysql-connector-j.version>
-        <neo4j-java-driver.version>6.0.5</neo4j-java-driver.version>
+        <neo4j-java-driver.version>6.2.0</neo4j-java-driver.version>
         <ojdbc17.version>23.26.2.0.0</ojdbc17.version>
         <postgresql.version>42.7.11</postgresql.version>
         <mssql-jdbc.version>13.4.0.jre11</mssql-jdbc.version>
@@ -33,6 +33,13 @@
     </properties>
 
     <dependencies>
+        <!-- Cassandra -->
+        <dependency>
+            <groupId>org.apache.cassandra</groupId>
+            <artifactId>java-driver-core</artifactId>
+            <version>${java-driver-core.version}</version>
+        </dependency>
+        <!-- Elasticsearch -->
         <dependency>
             <groupId>co.elastic.clients</groupId>
             <artifactId>elasticsearch-java</artifactId>
@@ -43,31 +50,37 @@
             <artifactId>elasticsearch-rest-client</artifactId>
             <version>${elasticsearch-rest-client.version}</version>
         </dependency>
+        <!-- MongoDB -->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>${mongodb-driver-sync.version}</version>
         </dependency>
+        <!-- MySQL -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql-connector-j.version}</version>
         </dependency>
+        <!-- Neo4j -->
         <dependency>
             <groupId>org.neo4j.driver</groupId>
             <artifactId>neo4j-java-driver</artifactId>
             <version>${neo4j-java-driver.version}</version>
         </dependency>
+        <!-- Oracle -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc17</artifactId>
             <version>${ojdbc17.version}</version>
         </dependency>
+        <!-- PostgreSQL-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
         </dependency>
+        <!-- Redis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
@@ -79,6 +92,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- SQL Server -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
@@ -93,11 +107,6 @@
             <groupId>tools.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-databind.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

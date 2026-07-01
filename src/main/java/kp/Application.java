@@ -1,5 +1,6 @@
 package kp;
 
+import kp.clients.cassandra.CassandraClient;
 import kp.clients.elasticsearch.ElasticsearchDatabaseClient;
 import kp.clients.mongodb.MongoDbClient;
 import kp.clients.mysql.MySqlClient;
@@ -28,16 +29,13 @@ public class Application {
     public static void main(String[] args) {
         final String arg = args != null && args.length > 0 ? args[0] : "";
         switch (arg) {
+            case "CAS_01":
+            case "CAS_02":
+                CassandraClient.process(arg);
+                break;
             case "ELA_01":
             case "ELA_02":
                 ElasticsearchDatabaseClient.process(arg);
-                break;
-            case "NEO_01":
-            case "NEO_02":
-            case "NEO_03":
-            case "NEO_04":
-            case "NEO_05":
-                Neo4jClient.process(arg);
                 break;
             case "MON_01":
             case "MON_02":
@@ -46,6 +44,13 @@ public class Application {
             case "MYS_01":
             case "MYS_02":
                 MySqlClient.process(arg);
+                break;
+            case "NEO_01":
+            case "NEO_02":
+            case "NEO_03":
+            case "NEO_04":
+            case "NEO_05":
+                Neo4jClient.process(arg);
                 break;
             case "ORA_01":
             case "ORA_02":

@@ -3,36 +3,35 @@ In Java 25 project Study29 I am implementing Java database clients to databases 
 Goal of these clients is to have base for query research using modern, professional Java database client.
 These clients run only on local Windows 10 machine.
 For this research project there are no plans for deployment on Cloud, deployment to production, or implementing tests.
-Because my other, more complicated, projects are based on Spring Data with Hibernate or on Quarkus Panache,
-these libraries should be not used here (because queries are not complicated here).
+Because my other, more complicated, projects are based on Spring Data (with Hibernate) or on Quarkus Panache,
+libraries from Spring Framework or from Quarkus should be not used here.
 
-Please act as a professional Java 25 Developer.
+Please act as a professional Java 25 Designer and Developer.
 For Cassandra database please implement class 'kp.clients.cassandra.CassandraClient'
 with entry method 'public static void process(String key)'.
-For connection to database in Docker container please use these  configuration parameters:
+In this method please implement database client logic for getting departments and employees.
+For connection to database in Docker container please use these configuration parameters:
+```
 CASSANDRA_HOST=localhost
 CASSANDRA_DC=kp-datacenter
 ```
-Docker container is using image 'cassandra:latest' (that is cassandra version 5.0.8).
+Docker container is using image 'cassandra:latest' (that is cassandra version 5.0.7).
 
-As a template you could use attached PostgreSqlClient class.
-I know it was good template for other relational databases like Oracle, and this is not relational database.
+As a database client logic template you could use attached PostgreSqlClient class.
+I know that Cassandra is not relational database, but that template was good for other relational databases.
 
-Use relevant professional solutions,
+In Java logic use relevant professional solutions,
 like for example try-with-resources statement or streams with Optional::ofNullable.
 If it is possible for this database, please add Schema Discovery Queries.
 Create database pool for this connection if you find it reasonable.
-Besides,  if it happens, that you use Hikari, please add 'config.setDriverClassName'.
-Please list Maven dependencies required by this client, which I will add to 'pom.xml'.
+Besides, if it happens, that you choose to use Hikari, please add 'config.setDriverClassName'.
+Please list new Maven dependencies required by this client, which I will add to 'pom.xml'.
 The tables 'departments' and 'employees' already exists in target database.
 
-I have added for your information files from other project, which uses Typescript and Node.js and
-queries those 'departments' and 'employees' tables.
-These are the files cassandra.constants.ts and cassandra.department.repository.ts.
-That Typescript project works as expected with this Cassandra database in Docker container.
-
-d:\1_node_workspace\Study28\src\repositories\cassandra\cassandra.constants.ts
-d:\1_node_workspace\Study28\src\repositories\cassandra\cassandra.department.repository.ts
+For your information and for comparing I have attached file 'Study28.zip'.
+In 'Study28.zip' are TypeScript classes from Node.js Express Server Application 'Study28'.
+That TypeScript project works as expected with this Cassandra database running in Docker container.
+This logic in 'repositories\cassandra' queries 'departments' and 'employees' in Cassadra database.
 ========================================================================================================================
 ELASTICSEARCH_HOST=localhost
 ELASTICSEARCH_PORT=9200
