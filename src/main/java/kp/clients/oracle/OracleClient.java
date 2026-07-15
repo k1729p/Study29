@@ -29,24 +29,20 @@ public class OracleClient {
         try (HikariDataSource dataSource = createConnectionPool();
              Connection connection = dataSource.getConnection()) {
             switch (key) {
-                case "ORA_01":
-                    SCHEMA_DISCOVERY_QUERIES.forEach((label, query) ->
-                            RelationalDatabaseClient.executeQuery(connection, query, label));
-                    break;
-                case "ORA_02":
+                case "ORA_01" -> SCHEMA_DISCOVERY_QUERIES.forEach((label, query) ->
+                        RelationalDatabaseClient.executeQuery(connection, query, label));
+                case "ORA_02" -> {
                     RelationalDatabaseConstants.DEPARTMENTS_AND_EMPLOYEES_QUERIES.forEach((label, query) ->
                             RelationalDatabaseClient.executeQuery(connection, query, label));
                     RelationalDatabaseClient.getDepartmentsAndEmployees(connection);
-                    break;
-                default:
-                    logger.warn("process(): unhandled key[{}]", key);
-                    break;
+                }
+                default -> logger.warn("process(): unhandled key[{}]", key);
             }
         } catch (SQLException e) {
             logger.error("process(): SQLException[{}]", e.getMessage());
             throw new RuntimeException(e);
         }
-        logger.info("process(): key[{}] completed", key);
+        logger.info("process(): key[{}]", key);
     }
 
     /**

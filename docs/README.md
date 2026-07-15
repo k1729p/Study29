@@ -1,5 +1,5 @@
 # [Study 29](https://github.com/k1729p/Study29)
-## Database Clients
+## 10 Database Clients
 - Cassandra
 - Chroma
 - Elasticsearch

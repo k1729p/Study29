@@ -161,6 +161,7 @@ public class CassandraClient {
                     final String name = entry.getValue();
                     return new Department(id, name, departmentEmployees.get(id));
                 }).toList();
+        logger.info("### Get departments and employees ###");
         Tools.printDepartments(departmentList);
     }
 }

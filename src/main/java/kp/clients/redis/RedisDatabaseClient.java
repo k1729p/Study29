@@ -35,23 +35,17 @@ public class RedisDatabaseClient {
      */
     public static void process(String key) {
         switch (key) {
-            case "RED_01":
-                discoverSchema();
-                break;
-            case "RED_02":
-                getDepartmentsAndEmployees();
-                break;
-            case "RED_03":
+            case "RED_01" -> discoverSchema();
+            case "RED_02" -> getDepartmentsAndEmployees();
+            case "RED_03" -> {
                 logger.info("- ".repeat(20));
                 ProbabilisticDataTypes.checkItemMembership(CLIENT);
                 ProbabilisticDataTypes.calculateSetCardinality(CLIENT);
                 ProbabilisticDataTypes.countItemFrequency(CLIENT);
                 ProbabilisticDataTypes.calculateQuantiles(CLIENT);
                 ProbabilisticDataTypes.calculateRankings(CLIENT);
-                break;
-            default:
-                logger.warn("process(): unhandled key[{}]", key);
-                break;
+            }
+            default -> logger.warn("process(): unhandled key[{}]", key);
         }
         logger.info("process(): key[{}]", key);
     }
@@ -104,6 +98,7 @@ public class RedisDatabaseClient {
                         departmentIdAndNameMap.get(departmentId),
                         departmentEmployeesMap.getOrDefault(departmentId, new ArrayList<>())))
                 .toList();
+        logger.info("### Get departments and employees ###");
         Tools.printDepartments(departments);
     }
 

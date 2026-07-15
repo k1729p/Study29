@@ -39,39 +39,37 @@ public class Neo4jClient {
      * @param key the key
      */
     public static void process(String key) {
-
+        /*
+         * Before Northwind initialization run "copy_to_Docker.bat".
+         */
         Logger.getLogger("org.neo4j.driver").setLevel(Level.WARNING);
         try (Driver driver = createConnectionPool()) {
             driver.verifyConnectivity();
 
             switch (key) {
-                case "NEO_01":
-                    executeCypherQuery(driver, SCHEMA_DISCOVERY_QUERIES);
-                    break;
-                case "NEO_02":
+                case "NEO_01" -> executeCypherQuery(driver, SCHEMA_DISCOVERY_QUERIES);
+                case "NEO_02" -> {
                     DatasetTools.recreateDepartmentsDatasetInNeo4j(driver);
                     final List<Department> departmentList = getDepartments(driver);
+                    logger.info("### Get departments and employees ###");
                     Tools.printDepartments(departmentList);
                     executeCypherQuery(driver, List.of(DEPARTMENTS_AND_EMPLOYEES_QUERY));
-                    break;
-                case "NEO_03":
+                }
+                case "NEO_03" -> {
                     executeCypherQuery(driver, NORTHWIND_INITIALIZATION_QUERIES_1);
                     executeCypherQuery(driver, NORTHWIND_INITIALIZATION_QUERIES_2);
-                    break;
-                case "NEO_04":
-                    executeCypherQuery(driver, NORTHWIND_READ_ALL_QUERIES);
-                    break;
-                case "NEO_05":
-                    executeCypherQuery(driver, CYPHER_QUERIES);
-                    break;
-                default:
-                    break;
+                }
+                case "NEO_04" -> executeCypherQuery(driver, NORTHWIND_READ_ALL_QUERIES);
+                case "NEO_05" -> executeCypherQuery(driver, CYPHER_QUERIES);
+                default -> logger.warn("process(): unhandled key[{}]", key);
             }
         } catch (Exception e) {
             logger.error("process(): exception[{}]", e.getMessage());
             throw new RuntimeException(e);
         }
+        logger.info("process(): key[{}]", key);
     }
+
     /**
      * Gets departments and employees
      *

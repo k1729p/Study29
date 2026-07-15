@@ -87,7 +87,7 @@ public class ElasticsearchDatabaseClient {
      * @param client the Elasticsearch client
      */
     private static void getDepartmentsAndEmployees(ElasticsearchClient client) {
-        logger.info("### Departments and Employees ###");
+
         SearchResponse<Object> departmentResponse;
         SearchResponse<Object> employeeResponse;
         // This fails on client because project uses jackson-databind version 3:
@@ -104,6 +104,7 @@ public class ElasticsearchDatabaseClient {
             throw new RuntimeException(e);
         }
         final List<Department> departmentList = loadsDepartmentsAndEmployees(departmentResponse, employeeResponse);
+        logger.info("### Get departments and employees ###");
         Tools.printDepartments(departmentList);
     }
 

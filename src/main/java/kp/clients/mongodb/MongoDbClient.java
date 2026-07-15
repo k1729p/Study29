@@ -35,15 +35,9 @@ public class MongoDbClient {
             final MongoDatabase database = mongoClient.getDatabase(
                     Tools.getEnvStrOrDefault("MONGODB_DATABASE", "kp_database"));
             switch (key) {
-                case "MON_01":
-                    discoverCollectionsAndIndexes(database);
-                    break;
-                case "MON_02":
-                    getDepartmentsAndEmployees(database);
-                    break;
-                default:
-                    logger.warn("process(): unhandled key[{}]", key);
-                    break;
+                case "MON_01" -> discoverCollectionsAndIndexes(database);
+                case "MON_02" -> getDepartmentsAndEmployees(database);
+                default -> logger.warn("process(): unhandled key[{}]", key);
             }
         } catch (Exception e) {
             logger.error("process(): Exception[{}]", e.getMessage());
@@ -100,6 +94,7 @@ public class MongoDbClient {
             final List<Employee> employeeList = employeeDocumentList.stream().map(mapper).toList();
             departments.add(new Department(departmentId, name, employeeList));
         });
+        logger.info("### Get departments and employees ###");
         Tools.printDepartments(departments);
     }
 

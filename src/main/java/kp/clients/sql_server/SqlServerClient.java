@@ -29,18 +29,14 @@ public class SqlServerClient {
         try (HikariDataSource dataSource = createConnectionPool();
              Connection connection = dataSource.getConnection()) {
             switch (key) {
-                case "SQL_01":
-                    SCHEMA_DISCOVERY_QUERIES.forEach((label, query) ->
-                            RelationalDatabaseClient.executeQuery(connection, query, label));
-                    break;
-                case "SQL_02":
+                case "SQL_01" -> SCHEMA_DISCOVERY_QUERIES.forEach((label, query) ->
+                        RelationalDatabaseClient.executeQuery(connection, query, label));
+                case "SQL_02" -> {
                     RelationalDatabaseConstants.DEPARTMENTS_AND_EMPLOYEES_QUERIES.forEach((label, query) ->
                             RelationalDatabaseClient.executeQuery(connection, query, label));
                     RelationalDatabaseClient.getDepartmentsAndEmployees(connection);
-                    break;
-                default:
-                    logger.warn("process(): unhandled key[{}]", key);
-                    break;
+                }
+                default -> logger.warn("process(): unhandled key[{}]", key);
             }
         } catch (SQLException e) {
             logger.error("process(): SQLException[{}]", e.getMessage());
